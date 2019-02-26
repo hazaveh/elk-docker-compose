@@ -1,0 +1,19 @@
+elk:
+  container_name: elk
+  image: sebp/elk
+  ports:
+    - "5601:5601"
+    - "9200:9200"
+    # enable for logstash
+    #- "5044:5044"
+    - "9300:9300"
+  restart: unless-stopped
+  environment:
+  - ES_HEAP_SIZE=1g
+  - TZ=Etc/UTC
+  - ES_JAVA_OPTS=""
+  - ES_CONNECT_RETRY=300
+  volumes:
+    - "./configurations/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml"
+    - "./configurations/kibana.yml:/opt/kibana/kibana.yml"
+    - "./elasticsearch:/var/lib/elasticsearch"
